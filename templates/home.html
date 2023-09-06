@@ -7,9 +7,20 @@
 <body>
 Add Subscriber :
 <form name="add_subscriber" method="post" action="/add_subscriber">
-     <input type="text" id="fname" name="fname"><br><br>
-     <input type="text" id="email" name="email"><br><br>
+    <label>Enter First Name:</label><input type="text" id="fname" name="fname"><br><br>
+    <label>Emnter Email id:</label><input type="text" id="email" name="email"><br><br>
     <button type="submit">Add Subscriber</button>
-</form>>
+    <br/><br/>
+</form>
+<br/><br/>
+Remove Subscriber:
+    <form name="unsubscribe" method="post" action="/unsubscribe">
+        <label>Enter user email:</label><input type="text" id="email" name="email"><br><br>
+    <button type="submit">Unsubscribe user</button>
+</form>
+
+<form name="send_email" action="/send_email">
+    <button type="submit">Send email</button>
+</form>
 </body>
 </html>
