@@ -1,3 +1,5 @@
+from email.mime.multipart import MIMEMultipart
+
 from flask import Flask, render_template
 import mysql.connector
 from flask import request
@@ -46,11 +48,31 @@ def remove_subscriber():
 
 @app.route('/send_email')
 def send_simple_message():
-    msg = MIMEText('Testing some Mailgun awesomness')
+    #msg = MIMEText('Testing some Mailgun awesomness')
+    msg = MIMEMultipart('alternative')
     msg['Subject'] = "Hello"
     msg['From'] = "foo@sandboxe31f460a7b0d4ce8a327a5aee444d8c7.mailgun.org"
     msg['To'] = "satyamshikhar@gmail.com"
+    html = """
+    <html>
+      <head></head>
+      <body>
+        <p>Hi!<br>
+           How are you?<br>
+           Here is the <a href="http://www.python.org">link</a> you wanted.
+        </p>
+      </body>
+    </html>
+    """
+    text=''
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
 
+    # Attach parts into message container.
+    # According to RFC 2046, the last part of a multipart message, in this case
+    # the HTML message, is best and preferred.
+    msg.attach(part1)
+    msg.attach(part2)
     s = smtplib.SMTP('smtp.mailgun.org', 587)
 
     s.login('postmaster@sandboxe31f460a7b0d4ce8a327a5aee444d8c7.mailgun.org', '18be4751d126ff1317ab5f7e255c6c82-7ca144d2-004b0108')
