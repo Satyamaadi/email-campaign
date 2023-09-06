@@ -14,10 +14,12 @@ def hello_world():  # put application's code here
 @app.route('/add_subscriber', methods=['GET', 'POST'])
 def add_subscriber():
     data = request.data
+    print(data)
     cnx = mysql.connector.connect(user='satyam', password='satyam', host='127.0.0.1', database='mysql')
     cursor = cnx.cursor()
     insert = 'insert into subscribers (first_name,email) values(%s,%s);'
     cursor.execute(insert, data)
+    cursor.close()
     cnx.close()
 
 
