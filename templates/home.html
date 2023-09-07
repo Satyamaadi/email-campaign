@@ -2,24 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DB ADMIN</title>
 </head>
 <body>
-Add Subscriber :
-<form name="add_subscriber" method="post" action="/add_subscriber">
-    <label>Enter First Name:</label><input type="text" id="fname" name="fname"><br><br>
-    <label>Emnter Email id:</label><input type="text" id="email" name="email"><br><br>
+<div style="text-align: center"><h5>DB ADMIN PAGE </h5></div>
+<div style="font-weight: bold">Add Subscriber :</div><br/>
+<form name="add_subscriber" method="post" action="/add_subscriber" style="margin-left:2px;border-left: 1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;border-top: 1px solid #000;   padding: 10px 2px;  margin: 50px auto;">
+    <label>Enter First Name:&nbsp;</label><input type="text" id="fname" name="fname"><br><br>
+    <label>Emnter Email id:&nbsp;</label><input type="text" id="email" name="email"><br><br>
     <button type="submit">Add Subscriber</button>
-    <br/><br/>
+    <br/>
 </form>
 <br/><br/>
-Remove Subscriber:
-    <form name="unsubscribe" method="post" action="/unsubscribe">
+<div style="font-weight: bold ">Remove Subscriber:</div><br/>
+    <form name="unsubscribe" method="post" action="/unsubscribe" style="margin-left:2px;border-left: 1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;border-top: 1px solid #000;   padding: 10px 2px;  margin: 50px auto;">
         <label>Enter user email:</label><input type="text" id="email" name="email"><br><br>
     <button type="submit">Unsubscribe user</button>
 </form>
-
-<form name="send_email" action="/send_email">
+<br/>
+<div style="font-weight: bold">Send Email Campaign</div><br/><br/>
+<form name="send_email" action="/send_email" method="post" style="margin-left:2px;border-left: 1px solid #000;border-right: 1px solid #000;border-bottom: 1px solid #000;border-top: 1px solid #000;   padding: 10px 2px;  margin: 50px auto;">
+    <label>Enter Subject:</label><input type="text" id="subject" name="subject"><br/>
+    <label>Enter Preview text:</label><input type="text" id="preview" name="preview"><br/>
+    <label>Enter Article URL:</label><input type="text" id="article_url" name="article_url"><br/>
+    <label>Enter HTML Content:</label><input type="text" id="html_cont" name="html_cont"><br/>
+    <label>Enter Plain Text Content:</label><input type="text" id="plain_text" name="plain_text"><br/>
+    <label>Enter Publish Date:</label><input type="text" id="pub_date" name="pub_date"><br/>
     <button type="submit">Send email</button>
 </form>
 </body>

@@ -46,25 +46,31 @@ def remove_subscriber():
     return {'statuscode': 200}
 
 
-@app.route('/send_email')
+@app.route('/send_email',methods=['POST', 'GET'])
 def send_simple_message():
-    #msg = MIMEText('Testing some Mailgun awesomness')
+    # msg = MIMEText('Testing some Mailgun awesomness')
+    sub = request.form['subject']
+    prev_txt = request.form['preview']
+    art_url = request.form['article_url']
+    html_cont = request.form['html_cont']
+    plain_text = request.form['plain_text']
+    pub_date = request.form['pub_date']
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = "Hello"
+    msg['Subject'] = sub
     msg['From'] = "foo@sandboxe31f460a7b0d4ce8a327a5aee444d8c7.mailgun.org"
     msg['To'] = "satyamshikhar@gmail.com"
     html = """
     <html>
       <head></head>
       <body>
-        <p>Hi!<br>
-           How are you?<br>
-           Here is the <a href="http://www.python.org">link</a> you wanted.
-        </p>
+        <h1>XX-article_url-XX</h1>
+        XX-html_cont-XX
+        <p>XX-pub_date-XX</p>
       </body>
     </html>
     """
-    text=''
+    html = html.replace('XX-article_url-XX',art_url).replace('XX-html_cont-XX',html_cont).replace('XX-pub_date-XX',pub_date)
+    text = prev_txt + ' '  + plain_text
     part1 = MIMEText(text, 'plain')
     part2 = MIMEText(html, 'html')
 
@@ -75,7 +81,8 @@ def send_simple_message():
     msg.attach(part2)
     s = smtplib.SMTP('smtp.mailgun.org', 587)
 
-    s.login('postmaster@sandboxe31f460a7b0d4ce8a327a5aee444d8c7.mailgun.org', '18be4751d126ff1317ab5f7e255c6c82-7ca144d2-004b0108')
+    s.login('postmaster@sandboxe31f460a7b0d4ce8a327a5aee444d8c7.mailgun.org',
+            '18be4751d126ff1317ab5f7e255c6c82-7ca144d2-004b0108')
     s.sendmail(msg['From'], msg['To'], msg.as_string())
     s.quit()
     return {'statuscode': 200}
