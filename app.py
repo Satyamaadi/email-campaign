@@ -1,5 +1,5 @@
 from email.mime.multipart import MIMEMultipart
-
+import os
 from flask import Flask, render_template
 import mysql.connector
 from flask import request
@@ -7,7 +7,7 @@ import requests
 import smtplib
 from email.mime.text import MIMEText
 
-cnx = mysql.connector.connect(user='satyam', password='satyam', host='127.0.0.1', database='mysql')
+cnx = mysql.connector.connect(user=os.getenv('USER'), password=os.getenv('PASSWORD'), host=os.getenv('HOST'), database=os.getenv('DATABASE'))
 cnx.close()
 app = Flask(__name__)
 
@@ -22,7 +22,8 @@ def add_subscriber():
     a = request.form['fname']
     b = request.form['email']
     data = (a, b)
-    cnx = mysql.connector.connect(user='satyam', password='satyam', host='127.0.0.1', database='mysql')
+    cnx = mysql.connector.connect(user=os.getenv('USER'), password=os.getenv('PASSWORD'), host=os.getenv('HOST'),
+                                  database=os.getenv('DATABASE'))
     cursor = cnx.cursor()
     insert = 'insert into subscribers (first_name,email) values(%s,%s);'
     cursor.execute(insert, data)
@@ -36,7 +37,8 @@ def add_subscriber():
 def remove_subscriber():
     a = request.form['email']
     # a = (a)
-    cnx = mysql.connector.connect(user='satyam', password='satyam', host='127.0.0.1', database='mysql')
+    cnx = mysql.connector.connect(user=os.getenv('USER'), password=os.getenv('PASSWORD'), host=os.getenv('HOST'),
+                                  database=os.getenv('DATABASE'))
     cursor = cnx.cursor()
     up = "update subscribers set is_active = false where email = '{}';"
     cursor.execute(up.format(a))
@@ -81,8 +83,7 @@ def send_simple_message():
     msg.attach(part2)
     s = smtplib.SMTP('smtp.mailgun.org', 587)
 
-    s.login('postmaster@sandboxe31f460a7b0d4ce8a327a5aee444d8c7.mailgun.org',
-            '18be4751d126ff1317ab5f7e255c6c82-7ca144d2-004b0108')
+    s.login(os.getenv('MAIL_USER'),os.getenv('MAIL_PWD'))
     s.sendmail(msg['From'], msg['To'], msg.as_string())
     s.quit()
     return {'statuscode': 200}
